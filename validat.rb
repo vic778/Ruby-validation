@@ -32,12 +32,13 @@ class User
     end
 
     def validate
-        validate_presence_of(name, number)
+        validate_presence_of(@name, @number)
     end
 
     
     def valid?
-        true
+        return true if validate
+        false
     end
 end
 
