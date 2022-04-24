@@ -1,0 +1,1 @@
+gem "activemodel", require: "active_model"
