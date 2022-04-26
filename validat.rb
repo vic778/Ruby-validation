@@ -1,9 +1,16 @@
 module Validatable
-  def validate_presence_of(name, number)
-    return unless name.nil? || number.nil?
-
-    errors.add(:name, "can't be blank")
-    errors.add(:number, "can't be blank")
+  def validate_presence_of(*attributes)
+    attributes.each do |attribute|
+      define_method("#{attribute}=") do |value|
+        instance_variable_set("@#{attribute}", value)
+      end
+      define_method(attribute.to_s) do
+        instance_variable_get("@#{attribute}")
+      end
+      define_method("validate_#{attribute}") do
+        errors.add(attribute, "can't be blank") if send(attribute).nil?
+      end
+    end
   end
 end
 
